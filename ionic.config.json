@@ -1,0 +1,8 @@
+{
+  "name": "mtg-extractor",
+  "app_id": "f3b92fc0",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
