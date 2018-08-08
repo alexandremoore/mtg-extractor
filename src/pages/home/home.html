@@ -1,14 +1,85 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+<ion-header color="primary">
+  <!-- <ion-navbar color="primary"> -->
+
+  <ion-toolbar color="primary">
+    <ion-title>MTG-EXTRACTOR</ion-title>
+    <ion-buttons end>
+
+      <button *ngIf="showDownload()" ion-button icon-left (click)="downloadAllCards()">
+        <ion-icon name="download"></ion-icon>
+        Download all cards ({{selectedCards?.length}})
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+  <!-- </ion-navbar> -->
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content no-padding>
+  <ng-progress color="#70C1B3" thick="true" showSpinner="false"></ng-progress>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col no-padding col-3 fixed>
+        <ion-list no-lines>
+          <button ion-item color="secondary" [disabled]="selectedSets?.length === 0 " icon-left (click)="downloadSelectedSetsCardsInfo()">
+            <ion-icon name="download"></ion-icon>
+            Download cards info for selected set(s)
+          </button>
+          <!-- <button ion-item color="secondary" *ngFor="let simpleSet of simpleSets" (click)="setSelected(simpleSet)">
+            {{simpleSet.code}} - {{simpleSet.name}}
+          </button> -->
+          <ion-item *ngFor="let simpleSet of simpleSets">
+            <ion-label>{{simpleSet.code}} - {{simpleSet.name}}</ion-label>
+            <ion-checkbox (ionChange)="updateSelectedSets(simpleSet.code, $event)"></ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col class="col-left-border" no-padding>
+        <div *ngIf="selectedSet">
+          <!-- <h2>{{selectedSet?.name}} [{{selectedSet.code}}]
+            <ion-badge color="primary">{{selectedSet?.cards?.length}} cards</ion-badge>
+          </h2>
+          <h4>Released on {{selectedSet.releaseDate}}</h4>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 *ngFor="let card of selectedSet.cards" (click)="itemSelected(card)">
+                <ion-item text-center>
+                  {{card?.name}}
+                </ion-item>
+                <div text-center padding>
+                  <img src="{{card?.imageUrl}}" height="100%" width="100%" />
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid> -->
+          <div class="example-container">
+            <mat-table mat-table #table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+                <mat-cell *matCellDef="let card"> {{card.multiverseid}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                <mat-cell *matCellDef="let card"> {{card.name}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="text">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Text </mat-header-cell>
+                <mat-cell *matCellDef="let card"> {{card.text}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="set">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Set </mat-header-cell>
+                <mat-cell *matCellDef="let card"> {{card.setCode}} </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

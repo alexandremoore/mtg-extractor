@@ -1,3 +1,24 @@
 page-home {
 
+    .col-left-border{
+        border-left: 1px solid color($colors, secondary, base);
+    }
+
+   .ng-progress {
+        position: relative !important;
+    }
+
+    .bar-shadow {
+        display: none !important;
+    }
+
+    .example-container {
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        }
+      
+      .mat-header-cell.mat-sort-header-sorted {
+        color: black;
+      }
 }

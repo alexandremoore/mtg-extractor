@@ -33,3 +33,5 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+
+mtg-extractor-win32-x64/
